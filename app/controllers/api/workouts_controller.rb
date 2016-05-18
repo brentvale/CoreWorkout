@@ -1,4 +1,6 @@
 class Api::WorkoutsController < ApplicationController
+  before_action :authenticate_user!
+  
   def index
     @workouts = Workout.all
     render json: @workouts
