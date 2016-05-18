@@ -4,10 +4,13 @@ class Api::WorkoutsController < ApplicationController
     render json: @workouts
   end
 
-  def new
-  end
-
   def create
+    @workout = Workout.new(workout_params)
+    if @workout.save
+      render json: @workout
+    else
+      render json: @workout.errors.full_messages
+    end
   end
 
   def show
@@ -25,5 +28,6 @@ class Api::WorkoutsController < ApplicationController
   private
 
   def workout_params
+    params.require(:workout).permit(:name)
   end
 end
