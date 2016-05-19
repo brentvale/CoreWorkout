@@ -1,3 +1,19 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+ul.workoutList{
+  list-style-type:none;
+}
+ul.workoutList li{
+  border: 1px solid black;
+  margin-bottom:10px;
+  padding:10px;
+  min-width:300px;
+  width:30%;
+}
+h3{
+  margin:5px;
+}
+p{
+  margin:5px 0px 15px;
+}

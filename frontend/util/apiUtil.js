@@ -16,7 +16,7 @@ module.exports = {
 
   fetchSingleWorkout: function (id) {
     $.ajax({
-      url: "api/WORKOUT/" + id,
+      url: "api/workouts/" + id,
       success: function (workout) {
         ServerActions.receiveSingleWorkout(workout);
       }
@@ -25,7 +25,7 @@ module.exports = {
 
   createWorkout: function (workout, callback) {
     $.ajax({
-      url: "api/workout",
+      url: "api/workouts",
       method: "POST",
       data: {workout: workout},
       success: function (workout) {

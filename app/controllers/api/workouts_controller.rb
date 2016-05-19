@@ -2,12 +2,13 @@ class Api::WorkoutsController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @workouts = Workout.all
+    @workouts = current_user.workouts
     render json: @workouts
   end
 
   def create
     @workout = Workout.new(workout_params)
+    @workout.user_id = current_user.id
     if @workout.save
       render json: @workout
     else
@@ -16,6 +17,8 @@ class Api::WorkoutsController < ApplicationController
   end
 
   def show
+    @workout = Workout.find(params[:id])
+    render json: @workout
   end
 
   def edit
@@ -30,6 +33,6 @@ class Api::WorkoutsController < ApplicationController
   private
 
   def workout_params
-    params.require(:workout).permit(:name)
+    params.require(:workout).permit(:name, :user_id)
   end
 end

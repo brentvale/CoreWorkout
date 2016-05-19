@@ -5,6 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Workout.create(name: "Full Ab Routine")
-Workout.create(name: "Lower Ab Focus")
-Workout.create(name: "Lower Ab / Back")
+Workout.create(name: "Full Ab Routine", user_id: 1)
+Workout.create(name: "Lower Ab Focus", user_id: 1)
+Workout.create(name: "Lower Ab / Back", user_id: 1)

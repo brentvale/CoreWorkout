@@ -1,30 +1,42 @@
 var React = require('react');
-var WorkoutStore = require('../../store/workout_store').WorkoutStore;
+var WorkoutStore = require('../../stores/workout.js');
+var ClientActions = require('../../actions/clientActions.js');
 
 var Form = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+  
   getInitialState: function(){
-    return {value: ""}
+    return {workoutName: ""}
   },
   handleChange: function(event){
-    this.setState({value: event.target.value})
+    this.setState({workoutName: event.target.value})
   },
   createWorkout: function(e){
-    debugger
     e.preventDefault();
+    
+    var workoutName = this.state.workoutName.trim();
+
     var workout = {
-      workout: {
-        name: e.target.value
-      }
+        "name": workoutName
     };
-    ClientActions.createWorkout(workout);
+    
+    var that = this;
+    
+    ClientActions.createWorkout(workout, function(id){
+      that.context.router.push("/workouts/" + id);
+    }.bind(this));
+    
+    this.setState({workoutName: ""});
   },
   render: function(){
     return(
-      <div>
+      <form className="workoutForm" onSubmit={this.createWorkout}>
         <span>Workout Name: {this.state.value} </span><br />
-        <input type="text" value={this.state.value} onChange={this.handleChange}></input>
-        <button onClick={this.createWorkout}>Create Workout</button>
-      </div>
+        <input type="text" placeholder="name your workout" value={this.state.workoutName} onChange={this.handleChange}></input>
+        <input type="submit" value="Post" />
+      </form>
     )
   }
   
