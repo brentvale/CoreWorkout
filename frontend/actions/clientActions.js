@@ -6,7 +6,11 @@ module.exports = {
   },
 
   createWorkout: function(workout, callback) {
-    ApiUtil.createWorkout(workout, callback)
+    ApiUtil.createWorkout(workout, callback);
+  },
+  
+  createAssociatedActivities: function(idsArray, callback){
+    ApiUtil.createAssociatedActivities(idsArray, callback);
   },
 
   fetchSingleWorkout: function(id) {

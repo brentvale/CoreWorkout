@@ -25,7 +25,7 @@ var Form = React.createClass({
     var that = this;
     
     ClientActions.createWorkout(workout, function(id){
-      that.context.router.push("/workouts/" + id);
+      that.context.router.push("/pickExercises");
     }.bind(this));
     
     this.setState({workoutName: ""});

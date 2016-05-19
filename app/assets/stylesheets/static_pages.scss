@@ -17,3 +17,32 @@ h3{
 p{
   margin:5px 0px 15px;
 }
+button{
+  height:40px;
+  width: 150px;
+}
+button:hover{
+  cursor:hand;
+  cursor:pointer;
+}
+.exerciseSelectItem{
+  display:inline-block;
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin:5px;
+  text-align:center;
+}
+.exerciseSelectItem:hover{
+  cursor:hand;
+  cursor:pointer;
+  background-color:#e6ffe6;
+}
+.selected{
+  background-color: #7dff7d;
+}
+.exerciseSelect{
+  list-style-type: none;
+  width:300px;
+}

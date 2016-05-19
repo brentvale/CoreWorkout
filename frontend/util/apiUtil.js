@@ -22,6 +22,17 @@ module.exports = {
       }
     })
   },
+  
+  createAssociatedActivities: function(exerciseIdsArray, callback){
+    $.ajax({
+      url: "api/exercises/bulk_create",
+      method: "POST",
+      data: {exerciseIdsArray},
+      success: function(resp){
+        console.log("create associated activities");
+      }
+    })
+  },
 
   createWorkout: function (workout, callback) {
     $.ajax({
