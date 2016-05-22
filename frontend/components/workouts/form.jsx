@@ -6,7 +6,6 @@ var Form = React.createClass({
   contextTypes: {
     router: React.PropTypes.object
   },
-  
   getInitialState: function(){
     return {workoutName: ""}
   },
@@ -32,11 +31,13 @@ var Form = React.createClass({
   },
   render: function(){
     return(
-      <form className="workoutForm" onSubmit={this.createWorkout}>
-        <span>Workout Name: {this.state.value} </span><br />
-        <input type="text" placeholder="name your workout" value={this.state.workoutName} onChange={this.handleChange}></input>
-        <input type="submit" value="Post" />
-      </form>
+      <div className="workoutFormContainer">
+        <form className="workoutForm" onSubmit={this.createWorkout}>
+          <span>Create New Workout: {this.state.workoutName} </span><br />
+          <input type="text" placeholder="name your workout" value={this.state.workoutName} onChange={this.handleChange}></input>
+          <input type="submit" value="Next ->" />
+        </form>
+      </div>
     )
   }
   

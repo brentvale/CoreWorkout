@@ -14,7 +14,7 @@ var ViewExercises = require('./components/workouts/view_exercises.jsx').ViewExer
 
 var routes = (
   <Route path="/">
-    <Route path="/workouts" component={App} />
+    <IndexRoute component={App} />
     <Route path="/workouts/:workoutId" component={WorkoutShow} />
     <Route path="/pickExercises" component={SelectExercises} />
     <Route path="/doCrunches" component={ViewExercises} />
