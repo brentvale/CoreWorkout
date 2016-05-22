@@ -12,6 +12,7 @@ var SelectExercises = React.createClass({
     } else {
       var that = this;
       
+      //NEED TO PASS WORKOUT ID DOWN
       ClientActions.createAssociatedActivities(this.state.selectedExercises, function(){
         that.context.router.push("/doCrunches");
       }.bind(this));
