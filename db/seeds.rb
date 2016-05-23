@@ -8,3 +8,11 @@
 Workout.create(name: "Full Ab Routine", user_id: 1)
 Workout.create(name: "Lower Ab Focus", user_id: 1)
 Workout.create(name: "Lower Ab / Back", user_id: 1)
+
+Exercise.create(name: "Crunch", description: "Description for a crunch.")
+Exercise.create(name: "Pushups", description: "Description for pushups.")
+Exercise.create(name: "Bicycle", description: "Description for bicylce.")
+Exercise.create(name: "Supermans", description: "Description for supermans.")
+Exercise.create(name: "Side-Crunch", description: "Description for a side crunch.")
+Exercise.create(name: "Bridge", description: "Description for a bridge.")
+Exercise.create(name: "Leg Kicks", description: "Description for leg-kicks.")
