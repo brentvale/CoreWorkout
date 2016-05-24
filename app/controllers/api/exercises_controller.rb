@@ -1,4 +1,5 @@
 class Api::ExercisesController < ApplicationController
+  
   def index
     @exercises = Exercise.all
     render json: {exercises: @exercises}
@@ -9,7 +10,7 @@ class Api::ExercisesController < ApplicationController
   end
   
   def show
-    
+
   end
   
   def update
@@ -19,7 +20,7 @@ class Api::ExercisesController < ApplicationController
   private 
   
   def exercise_params
-    params.require(:exercise).permit(:name, :description, :svg_image_name)
+    params.require(:exercise).permit(:name, :description, :svg_image_name, :workout_id, )
   end
-
+  
 end

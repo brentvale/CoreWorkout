@@ -4,6 +4,8 @@ var WorkoutConstants = require('../constants/workoutConstants.js');
 var WorkoutStore = new Store(AppDispatcher);
 
 var _workouts = {};
+var _exercises = {};
+var _activities = {};
 
 var resetWorkouts = function (workouts) {
   _workouts = {};
@@ -12,8 +14,24 @@ var resetWorkouts = function (workouts) {
   });
 };
 
-var addWorkout = function (workout) {
-  _workouts[workout.id] = workout;
+var resetExercises = function (exercises) {
+  _exercises = {};
+  exercises.forEach(function (exercise) {
+    _exercises[exercise.id] = exercise;
+  });
+};
+
+var resetActivities = function (activities) {
+  _activities = {};
+  activities.forEach(function (activity) {
+    _activities[activity.id] = activity;
+  });
+};
+
+var addWorkout = function (options) {
+  _workouts[options.workout.id] = { workout: options.workout, 
+                            activities: options.activities
+                          };
 };
 
 WorkoutStore.all = function () {
@@ -22,6 +40,14 @@ WorkoutStore.all = function () {
     workouts.push(_workouts[id]);
   }
   return workouts;
+}
+
+WorkoutStore.allExercises = function(){
+  var exercises = [];
+  for (var id in _exercises){
+    exercises.push(_exercises[id]);
+  }
+  return exercises;
 }
 
 WorkoutStore.find = function (id) {
@@ -35,7 +61,15 @@ WorkoutStore.__onDispatch = function (payload) {
       WorkoutStore.__emitChange();
       break;
     case WorkoutConstants.WORKOUT_RECEIVED:
-      addWorkout(payload.workout);
+      addWorkout({workout: payload.workout, activities: payload.activities});
+      WorkoutStore.__emitChange();
+      break;
+    case WorkoutConstants.EXERCISES_RECEIVED:
+      resetExercises(payload.exercises);
+      WorkoutStore.__emitChange();
+      break;
+    case WorkoutConstants.ACTIVITIES_RECEIVED:
+      resetActivities(payload.activities);
       WorkoutStore.__emitChange();
       break;
   }

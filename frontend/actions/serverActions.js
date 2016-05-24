@@ -9,10 +9,25 @@ module.exports = {
     });
   },
 
-  receiveSingleWorkout: function (workout) {
+  receiveSingleWorkout: function (options) {
     Dispatcher.dispatch({
       actionType: WorkoutConstants.WORKOUT_RECEIVED,
-      workout: workout
+      workout: options.workout,
+      activities: options.activities
     });
-  }
+  },
+  
+  receiveCreatedActivities: function(activities){
+    Dispatcher.dispatch({
+      actionType: WorkoutConstants.ACTIVITIES_RECEIVED,
+      activities: activities
+    });
+  },
+  
+  receiveAvailableExercises: function(exercises){
+    Dispatcher.dispatch({
+      actionType: WorkoutConstants.EXERCISES_RECEIVED,
+      exercises: exercises
+    });
+  },
 }

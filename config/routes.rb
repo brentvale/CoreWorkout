@@ -5,10 +5,10 @@ Rails.application.routes.draw do
   namespace :api do 
     resources :workouts, only: [:index, :create, :show]
     resources :exercises, only: [:index, :create, :show, :update]
+    resources :activities, only: [:index, :create, :show, :update]
     
-    # post 'exercises/bulk_create', :to => 'exercises#bulk_create'
+    post 'activities/bulk_create', :to => 'activities#bulk_create'
   end
-  
   
   root to: "static_pages#home"
 end

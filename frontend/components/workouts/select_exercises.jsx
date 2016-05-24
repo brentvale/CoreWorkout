@@ -1,21 +1,40 @@
 var React = require('react');
 var ClientActions = require('../../actions/clientActions.js');
+var WorkoutStore = require('../../stores/workout.js');
 
 var SelectExercises = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object
+  },
   getInitialState: function(){
     //array of exercise ids
-    return {selectedExercises: []};
+    return {selectedExercises: [],
+            allExercises: WorkoutStore.allExercises()};
+  },
+  _onChange: function(){
+    this.setState({allExercises: WorkoutStore.allExercises()})
+  },
+  componentDidMount: function(){
+    this.exercisesListener = WorkoutStore.addListener(this._onChange);
+    ClientActions.fetchAvailableExercises();
+  },
+  componentWillUnmount: function(){
+    this.exercisesListener.remove();
   },
   handleNext: function(){
     if(this.state.selectedExercises.length == 0){
       console.log("error handling if you don't select any exercises");
     } else {
       var that = this;
-      
-      //NEED TO PASS WORKOUT ID DOWN
-      ClientActions.createAssociatedActivities(this.state.selectedExercises, function(){
-        that.context.router.push("/doCrunches");
-      }.bind(this));
+      var options = {
+        selectedExercises: this.state.selectedExercises,
+        callback: function(){
+          var urlPath = "/workouts/" + that.props.params.workoutId;
+          that.context.router.push(urlPath);
+        },
+        workoutId: this.props.params.workoutId
+      }
+      ClientActions.createAssociatedActivities(options);
     }
   },
   toggleSelected: function(e){
@@ -26,13 +45,14 @@ var SelectExercises = React.createClass({
       e.target.className = "exerciseSelectItem";
       this.state.selectedExercises.forEach(function(obj){
         if(obj !== parseInt(e.target.dataset.exerciseid)){
-          selectedArray.push(obj);
+          selectedArray.push(parseInt(obj));
         }
       });
     } else {
       e.target.className += " selected";
+      //add elements of the current state to the return array first
       this.state.selectedExercises.forEach(function(obj){
-        selectedArray.push(obj);
+        selectedArray.push(parseInt(obj));
       });
       selectedArray.push(parseInt(e.target.dataset.exerciseid));
     }
@@ -40,23 +60,14 @@ var SelectExercises = React.createClass({
     this.setState({selectedExercises: selectedArray});
   },
   render: function(){
-    //exerciseChoices to come from server
-    //eventually want to divide by functional group (top, mid, lower, back, side)
-    
-    //when replaced, pass exercise.id instead of 'exercise' -> the exercise name
-    var exerciseChoices = [ {id: 1, name: "Crunch"},
-                            {id: 2, name: "Leg Kicks"},
-                            {id: 3, name: "Pushups"},
-                            {id: 4, name: "Bicycle"},
-                            {id: 5, name: "Supermans"},
-                            {id: 6, name: "Side Crunch"},
-                            {id: 7, name: "Bridge"} ];
+    if(this.state.allExercises.length == 0){
+      return <div></div>;
+    }
     var that = this;
-    
     return(
       <div>
         <ul className="exerciseSelect">
-          {exerciseChoices.map(function(exercise, idx){
+          {this.state.allExercises.map(function(exercise, idx){
             return <li className="exerciseSelectItem" key={idx} data-exerciseid={exercise.id} onClick={that.toggleSelected}>{exercise.name}</li>
           })}
         </ul>

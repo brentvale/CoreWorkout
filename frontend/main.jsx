@@ -10,14 +10,12 @@ var App = require('./components/app.jsx').App;
 var WorkoutIndex = require('./components/workouts/index.jsx').WorkoutIndex;
 var WorkoutShow = require('./components/workouts/show.jsx').WorkoutShow;
 var SelectExercises = require('./components/workouts/select_exercises.jsx').SelectExercises;
-var ViewExercises = require('./components/workouts/view_exercises.jsx').ViewExercises;
 
 var routes = (
   <Route path="/">
     <IndexRoute component={App} />
     <Route path="/workouts/:workoutId" component={WorkoutShow} />
-    <Route path="/pickExercises" component={SelectExercises} />
-    <Route path="/doCrunches" component={ViewExercises} />
+    <Route path="/pickExercises/:workoutId" component={SelectExercises} />
   </Route>
 );
 

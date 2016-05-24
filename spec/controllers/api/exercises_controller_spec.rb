@@ -22,4 +22,5 @@ RSpec.describe Api::ExercisesController, type: :controller do
       
     end
   end
+  
 end

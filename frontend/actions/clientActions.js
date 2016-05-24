@@ -9,8 +9,12 @@ module.exports = {
     ApiUtil.createWorkout(workout, callback);
   },
   
-  createAssociatedActivities: function(idsArray, callback){
-    ApiUtil.createAssociatedActivities(idsArray, callback);
+  createAssociatedActivities: function(options){
+    ApiUtil.createAssociatedActivities(options);
+  },
+  
+  fetchAvailableExercises: function(){
+    ApiUtil.fetchAvailableExercises();
   },
 
   fetchSingleWorkout: function(id) {

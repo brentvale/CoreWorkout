@@ -11,4 +11,6 @@
 #
 
 class Exercise < ActiveRecord::Base
+  has_many :activities
+  has_many :workouts, through: :activities
 end
