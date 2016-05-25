@@ -6,8 +6,13 @@
   "directories": {
     "test": "test"
   },
+  "engines": {
+    "node": "5.11.0", 
+    "npm": "3.8.6"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "./node_modules/.bin/webpack"
   },
   "keywords": [],
   "author": "",
