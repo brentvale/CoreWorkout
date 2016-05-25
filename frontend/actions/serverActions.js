@@ -13,14 +13,17 @@ module.exports = {
     Dispatcher.dispatch({
       actionType: WorkoutConstants.WORKOUT_RECEIVED,
       workout: options.workout,
-      activities: options.activities
+      activities: options.activities,
+      exercises: options.exercises
     });
   },
   
-  receiveCreatedActivities: function(activities){
+  receiveCreatedActivitiesWithExercises: function(options){
     Dispatcher.dispatch({
-      actionType: WorkoutConstants.ACTIVITIES_RECEIVED,
-      activities: activities
+      actionType: WorkoutConstants.WORKOUT_RECEIVED,
+      activities: options.activities,
+      exercises: options.exercises,
+      workout: options.workout
     });
   },
   

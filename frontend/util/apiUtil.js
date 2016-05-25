@@ -17,10 +17,13 @@ module.exports = {
   fetchSingleWorkout: function (id) {
     $.ajax({
       url: "api/workouts/" + id,
+      method: "GET",
       success: function (workoutObj) {
         var workout = workoutObj.workout;
         var activities = workoutObj.activities;
-        ServerActions.receiveSingleWorkout({workout: workout, activities: activities});
+        var exercises = workoutObj.exercises;
+        
+        ServerActions.receiveSingleWorkout({workout: workout, activities: activities, exercises: exercises});
       }
     });
   },
@@ -31,8 +34,10 @@ module.exports = {
       method: "POST",
       data: {workout_id: options.workoutId,
             exerciseIdsArray: options.selectedExercises},
-      success: function(activitiesObj){
-        ServerActions.receiveCreatedActivities(activitiesObj.activities);
+      success: function(object){
+        ServerActions.receiveCreatedActivitiesWithExercises({ activities: object.activities,
+                                                              exercises: object.exercises,
+                                                              workout: object.workout       });
         options.callback && options.callback();
       }
     });
@@ -55,9 +60,9 @@ module.exports = {
       url: "api/workouts",
       method: "POST",
       data: {workout: workout},
-      success: function (workout) {
-        ServerActions.receiveSingleWorkout(workout);
-        callback && callback(workout.id);
+      success: function (workoutObj) {
+        ServerActions.receiveSingleWorkout({workout: workoutObj.workout});
+        callback && callback(workoutObj.workout.id);
       }
     });
   }

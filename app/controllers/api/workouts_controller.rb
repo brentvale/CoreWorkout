@@ -10,15 +10,15 @@ class Api::WorkoutsController < ApplicationController
     @workout = Workout.new(workout_params)
     @workout.user_id = current_user.id
     if @workout.save
-      render json: @workout
+      render json: {workout: @workout}
     else
       render json: @workout.errors.full_messages
     end
   end
 
   def show
-    @workout = Workout.includes(:activities).find(params[:id])
-    render json: {workout: @workout, activities: @workout.activities}
+    @workout = Workout.includes(:activities, :exercises).find(params[:id])
+    render json: {workout: @workout, activities: @workout.activities, exercises: @workout.exercises}
   end
 
   def edit

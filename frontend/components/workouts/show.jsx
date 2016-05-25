@@ -1,7 +1,7 @@
 var React = require('react');
 var WorkoutStore = require('../../stores/workout.js');
 var ClientActions = require('../../actions/clientActions.js');
-
+var ExerciseItem = require('../exercises/list_item.jsx').ExerciseItem;
 
 var WorkoutShow = React.createClass({
   getStateFromStore: function(){
@@ -36,6 +36,9 @@ var WorkoutShow = React.createClass({
         <ul className="workoutHeadingDetails">
           <li>{this.state.workoutObj.workout.name}</li>
           <li>{this.state.workoutObj.workout.created_at}</li>
+          {this.state.workoutObj.exercises.map(function(exercise){
+            return <ExerciseItem key={exercise.id} exercise={exercise}/>
+          })}
         </ul>
       </div>
     )

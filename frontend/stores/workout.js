@@ -30,7 +30,8 @@ var resetActivities = function (activities) {
 
 var addWorkout = function (options) {
   _workouts[options.workout.id] = { workout: options.workout, 
-                            activities: options.activities
+                                    activities: options.activities,
+                                    exercises: options.exercises
                           };
 };
 
@@ -61,15 +62,14 @@ WorkoutStore.__onDispatch = function (payload) {
       WorkoutStore.__emitChange();
       break;
     case WorkoutConstants.WORKOUT_RECEIVED:
-      addWorkout({workout: payload.workout, activities: payload.activities});
+      addWorkout({  workout: payload.workout, 
+                    activities: payload.activities, 
+                    exercises: payload.exercises
+                });
       WorkoutStore.__emitChange();
       break;
     case WorkoutConstants.EXERCISES_RECEIVED:
       resetExercises(payload.exercises);
-      WorkoutStore.__emitChange();
-      break;
-    case WorkoutConstants.ACTIVITIES_RECEIVED:
-      resetActivities(payload.activities);
       WorkoutStore.__emitChange();
       break;
   }
