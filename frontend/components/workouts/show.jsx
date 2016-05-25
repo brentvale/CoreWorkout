@@ -2,6 +2,7 @@ var React = require('react');
 var WorkoutStore = require('../../stores/workout.js');
 var ClientActions = require('../../actions/clientActions.js');
 var ExerciseItem = require('../exercises/list_item.jsx').ExerciseItem;
+var NavLink = require('../links/nav_link.jsx').NavLink;
 
 var WorkoutShow = React.createClass({
   getStateFromStore: function(){
@@ -21,10 +22,13 @@ var WorkoutShow = React.createClass({
   componentDidMount: function(){
     this.listener = WorkoutStore.addListener(this._onChange);
     var workoutId = parseInt(this.props.params.workoutId);
+    
     var workout = WorkoutStore.find(workoutId);
 
     if(workout !== undefined){
-      this.setState({workoutObj: workout});
+      this.setState({workoutObj: 
+                      {workout: workout}
+                    });
     } else {
       ClientActions.fetchSingleWorkout(workoutId);
     }
@@ -35,8 +39,17 @@ var WorkoutShow = React.createClass({
   render: function(){
 
     if(this.state.workoutObj == null) {return (<div></div>);}
+    
+    //coming from index, workout is a single object
 
-    var workoutId = this.state.workoutObj.workout.id;
+    //coming from link that routes and sends workout as props
+    var workoutId;
+    if(this.state.workoutObj.id){
+      workoutId = this.state.workoutObj.id;
+    } else {
+      workoutId = this.state.workoutObj.workout.id;
+    }
+
     var that = this;
     
     this.state.workoutObj.exercises.forEach(function(obj){
@@ -58,6 +71,7 @@ var WorkoutShow = React.createClass({
 
     return(
       <div>
+        <NavLink to={'/'}>Home</NavLink>
         <ul className="workoutHeadingDetails">
           <li>{this.state.workoutObj.workout.name}</li>
           <li>{this.state.workoutObj.workout.created_at}</li>

@@ -9,8 +9,8 @@ var _activities = {};
 
 var resetWorkouts = function (workouts) {
   _workouts = {};
-  workouts.forEach(function (workout) {
-    _workouts[workout.id] = workout;
+  workouts.forEach(function (workoutObj) {
+    _workouts[workoutObj.workout.id] = workoutObj;
   });
 };
 
@@ -47,8 +47,8 @@ var addActivitySetToWorkoutActivity = function (activitySet, workoutId){
 
 WorkoutStore.all = function () {
   var workouts = [];
-  for (var id in _workouts) {
-    workouts.push(_workouts[id]);
+  for (var idx in _workouts) {
+    workouts.push(_workouts[idx]);
   }
   return workouts;
 }

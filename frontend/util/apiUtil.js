@@ -32,6 +32,18 @@ module.exports = {
     });
   },
   
+  createWorkout: function (workout, callback) {
+    $.ajax({
+      url: "api/workouts",
+      method: "POST",
+      data: {workout: workout},
+      success: function (workoutObj) {
+        ServerActions.receiveSingleWorkout({workout: workoutObj.workout});
+        callback && callback(workoutObj.workout.id);
+      }
+    });
+  },
+  
   createAssociatedActivities: function(options){
     $.ajax({
       url: "api/activities/bulk_create",
@@ -75,16 +87,4 @@ module.exports = {
       }
     });
   },
-
-  createWorkout: function (workout, callback) {
-    $.ajax({
-      url: "api/workouts",
-      method: "POST",
-      data: {workout: workout},
-      success: function (workoutObj) {
-        ServerActions.receiveSingleWorkout({workout: workoutObj.workout});
-        callback && callback(workoutObj.workout.id);
-      }
-    });
-  }
 }

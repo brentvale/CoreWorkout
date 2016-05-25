@@ -2,8 +2,18 @@ class Api::WorkoutsController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    @workouts = current_user.workouts
-    render json: @workouts
+    @workouts = current_user.workouts.includes(:activities, :exercises, :activity_sets)
+    @workout_objects = []
+    @workouts.each do |workout|
+      obj = {
+        workout: workout,
+        activities: workout.activities,
+        exercises: workout.exercises,
+        activitySets: workout.activity_sets
+      }
+      @workout_objects << obj
+    end
+    render json: @workout_objects
   end
 
   def create
