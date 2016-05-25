@@ -17,8 +17,11 @@ class Api::WorkoutsController < ApplicationController
   end
 
   def show
-    @workout = Workout.includes(:activities, :exercises).find(params[:id])
-    render json: {workout: @workout, activities: @workout.activities, exercises: @workout.exercises}
+    @workout = Workout.includes(:activities, :exercises, :activity_sets).find(params[:id])
+    render json: {  workout: @workout, 
+                    activities: @workout.activities, 
+                    exercises: @workout.exercises,
+                    activity_sets: @workout.activity_sets }
   end
 
   def edit

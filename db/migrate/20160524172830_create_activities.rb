@@ -6,5 +6,7 @@ class CreateActivities < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_index :activities, :workout_id
+    add_index :activities, :exercise_id
   end
 end

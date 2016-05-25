@@ -9,7 +9,8 @@ var KeyPad = React.createClass({
     this.setState({entryValue: newValue})
   },
   handleSubmission: function(e){
-    this.props.activitySetEntered(parseInt(this.state.entryValue), this.props.activityId);
+    this.props.closeModal();
+    this.props.createActivitySet(parseInt(this.state.entryValue), this.props.activityId);
   },
   render: function(){
     return(

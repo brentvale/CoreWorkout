@@ -14,4 +14,6 @@ class Workout < ActiveRecord::Base
   
   has_many :activities
   has_many :exercises, through: :activities
+  
+  has_many :activity_sets, through: :activities
 end

@@ -22,8 +22,12 @@ module.exports = {
         var workout = workoutObj.workout;
         var activities = workoutObj.activities;
         var exercises = workoutObj.exercises;
+        var activitySets = workoutObj.activity_sets;
         
-        ServerActions.receiveSingleWorkout({workout: workout, activities: activities, exercises: exercises});
+        ServerActions.receiveSingleWorkout({  workout: workout, 
+                                              activities: activities, 
+                                              exercises: exercises,
+                                              activitySets: activitySets });
       }
     });
   },
@@ -37,10 +41,27 @@ module.exports = {
       success: function(object){
         ServerActions.receiveCreatedActivitiesWithExercises({ activities: object.activities,
                                                               exercises: object.exercises,
-                                                              workout: object.workout       });
+                                                              workout: object.workout,
+                                                              activity_sets: object.activity_sets });
         options.callback && options.callback();
       }
     });
+  },
+  
+  createActivitySet: function(options){
+    $.ajax({
+      url: "api/activity_sets",
+      method: "POST",
+      data: {
+        activity_set: {
+          reps: options.reps,
+          activity_id: options.activityId
+        }
+      },
+      success: function(activitySetObj){
+        ServerActions.receiveActivitySet(activitySetObj);
+      }
+    })
   },
   
   fetchAvailableExercises: function(){

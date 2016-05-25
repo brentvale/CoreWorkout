@@ -14,7 +14,8 @@ module.exports = {
       actionType: WorkoutConstants.WORKOUT_RECEIVED,
       workout: options.workout,
       activities: options.activities,
-      exercises: options.exercises
+      exercises: options.exercises,
+      activitySets: options.activitySets
     });
   },
   
@@ -23,7 +24,16 @@ module.exports = {
       actionType: WorkoutConstants.WORKOUT_RECEIVED,
       activities: options.activities,
       exercises: options.exercises,
-      workout: options.workout
+      workout: options.workout,
+      activity_sets: options.activity_sets
+    });
+  },
+  
+  receiveActivitySet: function(options){
+    Dispatcher.dispatch({
+      actionType: WorkoutConstants.ACTIVITY_SET_RECEIVED,
+      activitySet: options.activity_set,
+      workoutId: options.workout_id
     });
   },
   

@@ -13,9 +13,10 @@ var WorkoutShow = React.createClass({
   _onChange: function(){
     this.setState({workoutObj: WorkoutStore.find(parseInt(this.props.params.workoutId))});
   },
-  activitySetEntered: function(value, activityId){
+  createActivitySet: function(value, activityId){
     //create rails api endpoint for activity sets
-    console.log("activity set entered");
+    ClientActions.createActivitySet({ reps: value, 
+                                      activityId: activityId });
   },
   componentDidMount: function(){
     this.listener = WorkoutStore.addListener(this._onChange);
@@ -34,7 +35,7 @@ var WorkoutShow = React.createClass({
   render: function(){
 
     if(this.state.workoutObj == null) {return (<div></div>);}
-    
+
     var workoutId = this.state.workoutObj.workout.id;
     var that = this;
     
@@ -43,9 +44,18 @@ var WorkoutShow = React.createClass({
       that.state.workoutObj.activities.forEach(function(activity){
         if(activity.exercise_id == obj.id){
           obj["activity_id"] = activity.id;
+          
+          //N^3 NO NO NO NO NO NO NO NO
+          obj["activitySets"] = [];
+          that.state.workoutObj.activitySets.forEach(function(activitySet){
+            if(activitySet.activity_id == activity.id){
+              obj["activitySets"].push(activitySet);
+            }
+          })
         }
       });
     });
+
     return(
       <div>
         <ul className="workoutHeadingDetails">
@@ -56,7 +66,8 @@ var WorkoutShow = React.createClass({
                                   exercise={exercise} 
                                   workoutId={workoutId} 
                                   activityId={exercise.activity_id}
-                                  activitySetEntered={that.activitySetEntered}/>
+                                  createActivitySet={that.createActivitySet}
+                                  activitySets={exercise.activitySets}/>
           })}
         </ul>
       </div>

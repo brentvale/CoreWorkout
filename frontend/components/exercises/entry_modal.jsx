@@ -30,7 +30,7 @@ var EntryModal = React.createClass({
             className="entryModal" >
             
             <KeyPad closeModal={this.closeModal} 
-                    activitySetEntered={this.props.activitySetEntered}
+                    createActivitySet={this.props.createActivitySet}
                     activityId={this.props.activityId}/>
             
           </Modal>

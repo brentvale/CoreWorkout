@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524172830) do
+ActiveRecord::Schema.define(version: 20160525171221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20160524172830) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "activity_sets", force: :cascade do |t|
+    t.integer  "activity_id"
+    t.integer  "reps"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "activity_sets", ["activity_id"], name: "index_activity_sets_on_activity_id", using: :btree
 
   create_table "exercises", force: :cascade do |t|
     t.string   "name"

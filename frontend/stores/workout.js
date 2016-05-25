@@ -29,10 +29,20 @@ var resetActivities = function (activities) {
 };
 
 var addWorkout = function (options) {
+  var activitySets = options.activitySets || [];
   _workouts[options.workout.id] = { workout: options.workout, 
                                     activities: options.activities,
-                                    exercises: options.exercises
+                                    exercises: options.exercises,
+                                    activitySets: activitySets
                           };
+};
+
+var addActivitySetToWorkoutActivity = function (activitySet, workoutId){
+  _workouts[workoutId].activities.forEach(function(activity, idx){
+    if(activity.id == activitySet.activity_id){
+      _workouts[workoutId].activitySets.push(activitySet);
+    }
+  });
 };
 
 WorkoutStore.all = function () {
@@ -64,12 +74,17 @@ WorkoutStore.__onDispatch = function (payload) {
     case WorkoutConstants.WORKOUT_RECEIVED:
       addWorkout({  workout: payload.workout, 
                     activities: payload.activities, 
-                    exercises: payload.exercises
+                    exercises: payload.exercises,
+                    activitySets:payload.activitySets
                 });
       WorkoutStore.__emitChange();
       break;
     case WorkoutConstants.EXERCISES_RECEIVED:
       resetExercises(payload.exercises);
+      WorkoutStore.__emitChange();
+      break;
+    case WorkoutConstants.ACTIVITY_SET_RECEIVED:
+      addActivitySetToWorkoutActivity(payload.activitySet, payload.workoutId);
       WorkoutStore.__emitChange();
       break;
   }

@@ -20,5 +20,9 @@ module.exports = {
   fetchSingleWorkout: function(id) {
     ApiUtil.fetchSingleWorkout(id);
   },
+  
+  createActivitySet: function(options){
+    ApiUtil.createActivitySet(options);
+  }
 
 }
