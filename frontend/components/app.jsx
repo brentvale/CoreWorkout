@@ -5,6 +5,21 @@ var WorkoutForm = require('./workouts/form.jsx').Form;
 
 
 var App = React.createClass({
+  getInitialState: function(){
+    return {currentUser: WorkoutStore.currentUser()};
+  },
+  _onChange: function(){
+    //add WorkoutStore.currentUser
+    this.setState({currentUser: WorkoutStore.currentUser()});
+  },
+  componentDidMount: function(){
+    //add fetchCurrentUser to ClientActions
+    this.appListener = WorkoutStore.addListener(this._onChange);
+    ClientActions.fetchCurrentUser();
+  },
+  componentWillUnmount: function(){
+    this.appListener.remove();
+  },
   render: function(){
     return(
       <div className="workoutIndex">
