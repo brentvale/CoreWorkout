@@ -23,6 +23,10 @@ module.exports = {
   
   createActivitySet: function(options){
     ApiUtil.createActivitySet(options);
+  },
+  
+  fetchCurrentUser: function(){
+    ApiUtil.fetchCurrentUser();
   }
 
 }

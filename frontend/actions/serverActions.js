@@ -2,6 +2,12 @@ var Dispatcher = require('../dispatcher/dispatcher.js');
 var WorkoutConstants = require('../constants/workoutConstants.js');
 
 module.exports = {
+  receiveCurrentUser: function (options){
+    Dispatcher.dispatch({
+      actionType: WorkoutConstants.CURRENT_USER_RECEIVED,
+      currentUser: options.currentUser
+    });
+  },
   receiveAllWorkouts: function (workouts) {
     Dispatcher.dispatch({
       actionType: WorkoutConstants.WORKOUTS_RECEIVED,

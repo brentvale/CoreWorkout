@@ -32,6 +32,19 @@ module.exports = {
     });
   },
   
+  fetchCurrentUser: function(){
+    $.ajax({
+      url: "api/users/fetch_user",
+      method: "GET",
+      success: function(userObj){
+        ServerActions.receiveCurrentUser({currentUser: userObj.current_user});
+      },
+      error: function(){
+        console.log("errored out in fetchCurrentUser")
+      }
+    })
+  },
+  
   createWorkout: function (workout, callback) {
     $.ajax({
       url: "api/workouts",

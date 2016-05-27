@@ -1,8 +1,7 @@
 class Api::WorkoutsController < ApplicationController
-  before_action :authenticate_user!
   
   def index
-    @workouts = current_user.workouts.includes(:activities, :exercises, :activity_sets)
+    @workouts = current_or_guest_user.workouts.includes(:activities, :exercises, :activity_sets)
     @workout_objects = []
     @workouts.each do |workout|
       obj = {
@@ -18,7 +17,7 @@ class Api::WorkoutsController < ApplicationController
 
   def create
     @workout = Workout.new(workout_params)
-    @workout.user_id = current_user.id
+    @workout.user_id = current_or_guest_user.id
     if @workout.save
       render json: {workout: @workout}
     else

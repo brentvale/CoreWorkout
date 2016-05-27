@@ -6,12 +6,17 @@ var WorkoutStore = new Store(AppDispatcher);
 var _workouts = {};
 var _exercises = {};
 var _activities = {};
+var _currentUser = {};
 
 var resetWorkouts = function (workouts) {
   _workouts = {};
   workouts.forEach(function (workoutObj) {
     _workouts[workoutObj.workout.id] = workoutObj;
   });
+};
+
+var addCurrentUser = function(currentUser){
+  _currentUser = currentUser;
 };
 
 var resetExercises = function (exercises) {
@@ -61,6 +66,10 @@ WorkoutStore.allExercises = function(){
   return exercises;
 }
 
+WorkoutStore.currentUser = function(){
+  return _currentUser;
+}
+
 WorkoutStore.find = function (id) {
   return _workouts[id];
 }
@@ -85,6 +94,10 @@ WorkoutStore.__onDispatch = function (payload) {
       break;
     case WorkoutConstants.ACTIVITY_SET_RECEIVED:
       addActivitySetToWorkoutActivity(payload.activitySet, payload.workoutId);
+      WorkoutStore.__emitChange();
+      break;
+    case WorkoutConstants.CURRENT_USER_RECEIVED:
+      addCurrentUser(payload.currentUser);
       WorkoutStore.__emitChange();
       break;
   }
