@@ -16,11 +16,9 @@ var Form = React.createClass({
     e.preventDefault();
     
     var workoutName = this.state.workoutName.trim();
-
     var workout = {
         "name": workoutName
     };
-    
     var that = this;
     
     ClientActions.createWorkout(workout, function(id){
