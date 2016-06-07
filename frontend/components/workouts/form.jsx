@@ -7,14 +7,16 @@ var Form = React.createClass({
     router: React.PropTypes.object
   },
   getInitialState: function(){
-    return {workoutName: ""}
+    return {workoutName: "", workoutDate: ""}
   },
   handleChange: function(event){
-    this.setState({workoutName: event.target.value})
+    debugger
+    this.setState({workoutName: event.target.value, workoutDate: event.target.value});
+  },
+  runValidations: function(e){
+    e.preventDefault();
   },
   createWorkout: function(e){
-    e.preventDefault();
-    
     var workoutName = this.state.workoutName.trim();
     var workout = {
         "name": workoutName
@@ -31,9 +33,18 @@ var Form = React.createClass({
   render: function(){
     return(
       <div className="workoutFormContainer">
-        <form className="workoutForm" onSubmit={this.createWorkout}>
+        <form className="workoutForm" onSubmit={this.runValidations}>
           <span>Create New Workout: {this.state.workoutName} </span><br />
-          <input type="text" placeholder="name your workout" value={this.state.workoutName} onChange={this.handleChange}></input>
+          <input  type="text" 
+                  placeholder="name your workout" 
+                  value={this.state.workoutName} 
+                  onChange={this.handleChange}>
+          </input>
+          <input  type="text" 
+                  placeholder="date of workout" 
+                  value={this.state.workoutDate} 
+                  onChange={this.handleChange}>
+          </input>
           <input type="submit" value="Next ->" />
         </form>
       </div>
