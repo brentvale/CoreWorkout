@@ -1,55 +1,25 @@
 var React = require('react');
-var WorkoutStore = require('../../stores/workout.js');
-var WorkoutListItem = require('./list_item.jsx').WorkoutListItem;
-var ClientActions = require('../../actions/clientActions.js');
+var ExerciseThumbnail = require('../exercises/thumbnail.jsx').ExerciseThumbnail;
 
 
-var WorkoutIndex = React.createClass({
-  getInitialState: function(){
-    return {workoutsObj: WorkoutStore.all()};
-  },
-  _onChange: function(){
-    this.setState({workoutsObj: WorkoutStore.all()});
-  },
-  componentDidMount: function () {
-    this.workoutListener = WorkoutStore.addListener(this._onChange);
-    ClientActions.fetchAllWorkouts();
-  },
-  componentWillUnmount: function () {
-    this.workoutListener.remove();
-  },
+var WorkoutsIndex = React.createClass({
   render: function(){
-      var wObjExists = false
-      for(var i in this.state.workoutsObj){
-        wObjExists = true;
-      }
-      if(!wObjExists){
-        console.log("wObjExists is false")
-        return (<div></div>);
-      }
-
-      var workouts =  this.state.workoutsObj.sort(function (a, b) {
-                        if (a.workout.created_at < b.workout.created_at) {
-                          return 1;
-                        }
-                        if (a.workout.created_at > b.workout.created_at) {
-                          return -1;
-                        }
-                        return 0;
-                      });           
-         
-      return(
-        <ul className="workoutList">
-          {
-            workouts.map(function(workoutObj, idx){
-              return <li key={idx}><WorkoutListItem workout={workoutObj.workout} /></li>
-            })
-          }
+    var exercises = ["exercise 1","exercise 2","exercise 3","exercise 4","exercise 5", "exercise 6","exercise 7","exercise 8","exercise 9","exercise 10", "exercise 11","exercise 12","exercise 13","exercise 14","exercise 15"];
+    return(
+      <div className="workout-selection">
+        <ul>
+          {exercises.map(function(exercise, idx){
+            return  <li  className="center-block" 
+                        key={idx}>
+                          <ExerciseThumbnail exercise={exercise} />
+                    </li>;
+          })}
         </ul>
-      )
+      </div>
+    )
   }
 });
 
 module.exports = {
-  WorkoutIndex: WorkoutIndex
+  WorkoutsIndex: WorkoutsIndex
 };
